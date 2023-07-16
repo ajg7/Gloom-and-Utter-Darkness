@@ -2,36 +2,40 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+namespace GloomAndUtterDarkness.Player
 {
-    [SerializeField] float speed = 6.0f;
-    [SerializeField] Vector3 moveDirection = Vector3.zero;
-    [SerializeField] CharacterController controller;
-    [SerializeField] float jumpSpeed = 8.0f;
-    [SerializeField] float gravity = 20.0f;
-
-    void Start()
+    public class PlayerController : MonoBehaviour
     {
-        controller = GetComponent<CharacterController>();
-    }
+        [SerializeField] float speed = 6.0f;
+        [SerializeField] Vector3 moveDirection = Vector3.zero;
+        [SerializeField] CharacterController controller;
+        [SerializeField] float jumpSpeed = 8.0f;
+        [SerializeField] float gravity = 20.0f;
 
-    void Update()
-    {
-        if (controller.isGrounded)
+        void Start()
         {
-            moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-            moveDirection *= speed;
+            controller = GetComponent<CharacterController>();
+        }
 
-            if (Input.GetButtonDown("Jump"))
+        void Update()
+        {
+            if (controller.isGrounded)
             {
-                moveDirection.y = jumpSpeed;
+                moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+                moveDirection *= speed;
+
+                if (Input.GetButtonDown("Jump"))
+                {
+                    moveDirection.y = jumpSpeed;
+                }
             }
-        } 
 
-        // Apply gravity
-        moveDirection.y -= gravity * Time.deltaTime;
+            // Apply gravity
+            moveDirection.y -= gravity * Time.deltaTime;
 
-        // Move the controller
-        controller.Move(moveDirection * Time.deltaTime);
+            // Move the controller
+            controller.Move(moveDirection * Time.deltaTime);
+        }
     }
+
 }
